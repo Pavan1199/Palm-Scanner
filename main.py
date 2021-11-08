@@ -14,12 +14,12 @@ mapOfGestureToVector = []
 
 
 def getVectorFromVideo(videopath):
-   frameCount = 0
-   frameExtractor(videopath,os.getcwd(),frameCount)
+   f = 0
+   frameExtractor(videopath,os.getcwd(),f)
 
-   img = cv2.imread(os.path.realpath('0000'+str(frameCount+1)+'.png'),cv2.IMREAD_UNCHANGED)
-   print(featureExtractor.extract_feature(img))
-   return featureExtractor.extract_feature(img)[0]
+   i = cv2.imread(os.path.realpath('0000'+str(f+1)+'.png'),cv2.IMREAD_UNCHANGED)
+   print(featureExtractor.extract_feature(i))
+   return featureExtractor.extract_feature(i)[0]
 
 
 for oneFile in os.listdir(trainDataDir):
@@ -32,15 +32,15 @@ for oneFile in os.listdir(trainDataDir):
 
 f = open("Results.csv", "w")
 for testFile in sorted(os.listdir(testDataDir)):
-   count = 0
-   cosSimilarity = 0.0
-   bestMatch = ""
-   testVec = getVectorFromVideo(os.path.join(testDataDir, testFile))
+   c = 0
+   cc = 0.0
+   bm = ""
+   tv = getVectorFromVideo(os.path.join(testDataDir, testFile))
    for trainVec in mapOfGestureToVector:
-      cs = np.inner(testVec, trainVec)/(np.linalg.norm(testVec)*np.linalg.norm(trainVec))
-      if cs > cosSimilarity:
-         cosSimilarity = cs
-         bestMatch = str(count)
-         count = count + 1
-   f.write(bestMatch+"\n")
+      cs = np.inner(tv, trainVec)/(np.linalg.norm(tv)*np.linalg.norm(trainVec))
+      if cs > cc:
+         cc = cs
+         bm = str(c)
+         c = c + 1
+   f.write(bm+"\n")
 f.close()
